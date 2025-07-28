@@ -3,8 +3,7 @@ import httpStatus from "http-status-codes" ;
 import bcryptjs from "bcryptjs" ;
 import { IUser } from "../user/user.interface";
 import { User } from "../user/user.model";
-import jwt, { Secret } from "jsonwebtoken" ;
-import { generateToken } from "../../ultis/jwt";
+import { createNewAccessTokenWithRefreshToken, createUserTokens } from "../../ultis/userToken";
 
 
 const credentialsLogin = async (payload: Partial<IUser>) => {
@@ -22,24 +21,29 @@ const credentialsLogin = async (payload: Partial<IUser>) => {
     throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Password")
   }
 
-  const jwtPayload = {
-    userId : isUserExist._id,
-    email: isUserExist.email,
-    role: isUserExist.role
-  }
+  const userTokens = createUserTokens(isUserExist)
 
-  const accessToken = generateToken(jwtPayload, "secret", "1d" )
-  // provide data from .env  1. secret, 2.expire date 
-
-
-
+  const {password: pass, ...rest} = isUserExist.toObject() ;
 
   return {
     // email : isUserExist.email
-    accessToken
+    accessToken : userTokens.accessToken,
+    refreshToken : userTokens.refreshToken,
+    user : rest
   };
 };
 
+
+const getNewAccessToken = async (refreshToken: string) => {
+    const newAccessToken = await createNewAccessTokenWithRefreshToken(refreshToken)
+
+    return {
+        accessToken: newAccessToken
+    }
+
+}
+
 export const AuthServices = {
-    credentialsLogin
+    credentialsLogin,
+    getNewAccessToken
 }

@@ -1,26 +1,33 @@
 import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app";
+import { seedSuperAdmin } from "./app/ultis/seedSuperAdmin";
+import { envVars } from "./app/config/env";
+
 
 let server: Server;
 
 const startServer = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://mongo_db:mongo_db@cluster0.shqkw.mongodb.net/ph-tour-db?retryWrites=true&w=majority&appName=Cluster0"
-    );
+    await mongoose.connect(envVars.DB_URL);
 
     console.log("Connected to DB..!!");
 
-    server = app.listen(5000, () => {
-      console.log("server is listening");
+    server = app.listen(envVars.PORT, () => {
+      console.log(`server is listening to port  ${envVars.PORT}`);
     });
   } catch (error) {
     console.log(error);
   }
 };
 
-startServer();
+
+(async () => {
+    await startServer()
+    await seedSuperAdmin()
+})() ;
+
+
 
 process.on("unhandledRejection", (err) => {
   console.log(

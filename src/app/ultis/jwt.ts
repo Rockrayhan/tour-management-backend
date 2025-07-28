@@ -14,3 +14,24 @@ export const verifyToken = ( token: string, secret: string ) => {
 
     return verifiedToken
 }
+
+
+
+
+// import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
+// import { envVars } from "../config/env";
+
+// // ✅ Generate token
+// export const generateToken = (
+//   payload: JwtPayload,
+//   expiresIn: string
+// ) => {
+//   const secret = envVars.JWT_ACCESS_SECRET;
+//   return jwt.sign(payload, secret, { expiresIn } as SignOptions);
+// };
+
+// // ✅ Verify token
+// export const verifyToken = (token: string) => {
+//   const secret = envVars.JWT_ACCESS_SECRET;
+//   return jwt.verify(token, secret);
+// };
