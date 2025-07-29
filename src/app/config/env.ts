@@ -5,7 +5,7 @@ dotenv.config()
 interface EnvConfig {
     PORT: string,
     DB_URL: string,
-    // NODE_ENV: "development" | "production"
+    NODE_ENV: "development" | "production"
     BCRYPT_SALT_ROUND: string
     JWT_ACCESS_SECRET: string
     JWT_ACCESS_EXPIRES: string
@@ -22,7 +22,7 @@ interface EnvConfig {
 }
 
 const loadEnvVariables = (): EnvConfig => {
-    const requiredEnvVariables: string[] = ["PORT", "DB_URL", "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES", "JWT_ACCESS_EXPIRES", "JWT_ACCESS_SECRET","BCRYPT_SALT_ROUND", "GOOGLE_CLIENT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CALLBACK_URL", "EXPRESS_SESSION_SECRET", "FRONTEND_URL"  ];
+    const requiredEnvVariables: string[] = ["PORT", "DB_URL", "NODE_ENV", "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES", "JWT_ACCESS_EXPIRES", "JWT_ACCESS_SECRET","BCRYPT_SALT_ROUND", "GOOGLE_CLIENT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CALLBACK_URL", "EXPRESS_SESSION_SECRET", "FRONTEND_URL"  ];
 
     // const requiredEnvVariables: string[] = ["PORT", "DB_URL", "NODE_ENV", "BCRYPT_SALT_ROUND", "JWT_ACCESS_EXPIRES", "JWT_ACCESS_SECRET", "SUPER_ADMIN_EMAIL", "SUPER_ADMIN_PASSWORD", "JWT_REFRESH_SECRET", "JWT_REFRESH_EXPIRES", "GOOGLE_CLIENT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CALLBACK_URL", "EXPRESS_SESSION_SECRET", "FRONTEND_URL"];
 
@@ -36,7 +36,7 @@ const loadEnvVariables = (): EnvConfig => {
         PORT: process.env.PORT as string,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         DB_URL: process.env.DB_URL!,
-        // NODE_ENV: process.env.NODE_ENV as "development" | "production",
+        NODE_ENV: process.env.NODE_ENV as "development" | "production",
         BCRYPT_SALT_ROUND: process.env.BCRYPT_SALT_ROUND as string,
         JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET as string,
         JWT_ACCESS_EXPIRES: process.env.JWT_ACCESS_EXPIRES as string,
